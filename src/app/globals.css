@@ -1,26 +1,168 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@custom-variant dark (&:is(.dark *));
+
+/*
+  Sistema de diseño derivado del kit de marca real de Match Agency
+  (elementor-kit-8, extraído de matchagency.com.co):
+
+    --e-global-color-primary:   #CD8AFF  (violeta de marca)
+    --e-global-color-secondary: #15091F  (tinta casi negra)
+    --e-global-color-text:      #7A7A7A  (gris apagado)
+    --e-global-color-accent:    #33CCCC  (verde azulado)
+    tints:                      #C8F5ED / #9CE3DC (menta), #F7D2C6 / #FFBC7D (durazno)
+    fondo cálido:                #FCFCF4
+    tipografía primaria/heading: "Oswald" (600 / 400)
+    tipografía de texto:         "Roboto" (400 / 500)
+
+  Para el producto (no la landing) se atenúa la saturación: el violeta se
+  usa como acento único de interacción, el verde azulado y el durazno
+  quedan reservados a estados (aprobado / pendiente) en vez de decoración,
+  y el fondo cálido reemplaza el blanco puro para reducir la carga visual.
+*/
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-roboto), ui-sans-serif, system-ui, sans-serif;
+  --font-heading: var(--font-oswald), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-roboto), ui-monospace, monospace;
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+
+  /* Colores de marca disponibles como utilidades (bg-brand-teal, text-brand-peach, etc.) */
+  --color-brand-ink: #15091f;
+  --color-brand-ink-soft: #1a1223;
+  --color-brand-violet: #cd8aff;
+  --color-brand-teal: #33cccc;
+  --color-brand-teal-soft: #c8f5ed;
+  --color-brand-teal-softer: #9ce3dc;
+  --color-brand-peach: #ffbc7d;
+  --color-brand-peach-soft: #f7d2c6;
+  --color-brand-navy: #262d43;
+  --color-brand-cream: #fcfcf4;
+
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+:root {
+  --background: #fcfcf4;
+  --foreground: #15091f;
+  --card: #ffffff;
+  --card-foreground: #15091f;
+  --popover: #ffffff;
+  --popover-foreground: #15091f;
+  --primary: #cd8aff;
+  --primary-foreground: #15091f;
+  --secondary: #f2ecfb;
+  --secondary-foreground: #15091f;
+  --muted: #f4f3ec;
+  --muted-foreground: #7a7a7a;
+  --accent: #e9fbf8;
+  --accent-foreground: #15091f;
+  --destructive: #c6484f;
+  --border: #ececec;
+  --input: #ececec;
+  --ring: #cd8aff;
+  --chart-1: #cd8aff;
+  --chart-2: #33cccc;
+  --chart-3: #ffbc7d;
+  --chart-4: #262d43;
+  --chart-5: #7a7a7a;
+  --radius: 0.875rem;
+  --sidebar: #15091f;
+  --sidebar-foreground: #fcfcf4;
+  --sidebar-primary: #cd8aff;
+  --sidebar-primary-foreground: #15091f;
+  --sidebar-accent: #221531;
+  --sidebar-accent-foreground: #fcfcf4;
+  --sidebar-border: oklch(1 0 0 / 8%);
+  --sidebar-ring: #cd8aff;
+}
+
+.dark {
+  --background: #15091f;
+  --foreground: #fcfcf4;
+  --card: #1a1223;
+  --card-foreground: #fcfcf4;
+  --popover: #1a1223;
+  --popover-foreground: #fcfcf4;
+  --primary: #cd8aff;
+  --primary-foreground: #15091f;
+  --secondary: #241733;
+  --secondary-foreground: #fcfcf4;
+  --muted: #241733;
+  --muted-foreground: #a99cb8;
+  --accent: #17322f;
+  --accent-foreground: #c8f5ed;
+  --destructive: #e5595f;
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 14%);
+  --ring: #cd8aff;
+  --chart-1: #cd8aff;
+  --chart-2: #33cccc;
+  --chart-3: #ffbc7d;
+  --chart-4: #9ce3dc;
+  --chart-5: #a99cb8;
+  --sidebar: #0f0616;
+  --sidebar-foreground: #fcfcf4;
+  --sidebar-primary: #cd8aff;
+  --sidebar-primary-foreground: #15091f;
+  --sidebar-accent: #221531;
+  --sidebar-accent-foreground: #fcfcf4;
+  --sidebar-border: oklch(1 0 0 / 8%);
+  --sidebar-ring: #cd8aff;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
   }
-}
-
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  body {
+    @apply bg-background text-foreground;
+  }
+  html {
+    @apply font-sans;
+  }
+  h1,
+  h2,
+  h3 {
+    @apply font-heading;
+    letter-spacing: -0.01em;
+  }
 }
